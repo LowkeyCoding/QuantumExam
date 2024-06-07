@@ -39,6 +39,28 @@ def execute(qc, backend, shots =1):
     # Get the result
     return job_sim.result().get_counts(qc_compiled)
 
+
+
+def get_shared_key2(a,b):
+    shared_idx = []
+    for idx, basis in enumerate(zip(a.basis, b.basis)):
+        if basis[0] == basis[1]:
+            shared_idx.append(idx)
+    
+    n_a = [a.key[idx] for idx in shared_idx]
+    n_b = [b.key[idx] for idx in shared_idx]
+
+    return(n_a, n_b)
+
+def get_accurracy(key_a, key_b):
+    acc = 0
+
+    for bit in zip(key_a, key_b):
+        if bit[0] == bit[1]:
+            acc += 1
+    return acc // len(key_a)
+
+
 def get_shared_key(a, b, sim = 1, debug = False, simp = False):
     keep = []
     discard = []
